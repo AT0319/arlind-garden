@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HelioShade – Mechanik, Rolloprinzip & Sturmsicherung</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 { margin: 0 0 5px 0; color: #38bdf8; }
+        p.sub { margin: 0 0 15px 0; color: #94a3b8; font-size: 14px; }
+        .dashboard {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1100px;
+        }
+        canvas {
+            background: linear-gradient(180deg, #1e293b 0%, #334155 78%, #1e293b 78%);
+            border-radius: 12px;
+            border: 2px solid #475569;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .panel {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 18px;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .btn-group { display: flex; gap: 10px; }
+        button {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-storm { background: #ef4444; color: white; }
+        .btn-storm:hover { background: #dc2626; }
+        .btn-sun { background: #22c55e; color: white; }
+        .btn-sun:hover { background: #16a34a; }
+        .control-box {
+            background: #0f172a;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        .control-box label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #cbd5e1;
+        }
+        input[type="range"] { width: 100%; cursor: pointer; }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .kpi {
+            background: #0f172a;
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid #38bdf8;
+            font-size: 12px;
+        }
+        .kpi strong { display: block; font-size: 15px; color: #fff; margin-top: 2px; }
+        .status-badge {
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+            background: #166534;
+            color: #dcfce7;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>HelioShade – Kinematik-Simulator: Punkt 2 (Mechanik, Gestell & Sturmsicherung)</h2>
+    <p class="sub">Interaktive Visualisierung: Eckiges 20×20-Alugestell • Rolloprinzip mit Drahtseilführung • 3-stufiger Teleskopmast (Ø 60/50/40 mm mit TR16×4 Spindel)</p>
+
+    <div class="dashboard">
+        <canvas id="simCanvas" width="700" height="480"></canvas>
+
+        <div class="panel">
+            <div id="statusBadge" class="status-badge">STATUS: NORMALER TRACKING-BETRIEB</div>
+
+            <div class="btn-group">
+                <button class="btn-storm" onclick="triggerStormMode()">🌪️ STURM-MODUS (Einfahren)</button>
+                <button class="btn-sun" onclick="triggerSunMode()">☀️ SONNEN-MODUS (Ausfahren)</button>
+            </div>
+
+            <div class="control-box">
+                <label><span>1. Dach-Neigung (Tilt):</span> <strong id="valTilt">25°</strong></label>
+                <input type="range" id="slTilt" min="-35" max="35" value="25" oninput="manualOverride()">
+            </div>
+
+            <div class="control-box">
+                <label><span>2. Rolloprinzip (Solarfolie):</span> <strong id="valRollo">100% ausgefahren</strong></label>
+                <input type="range" id="slRollo" min="0" max="100" value="100" oninput="manualOverride()">
+            </div>
+
+            <div class="control-box">
+                <label><span>3. Teleskopmast (TR16×4 Hub):</span> <strong id="valMast">100% (Max. Höhe)</strong></label>
+                <input type="range" id="slMast" min="0" max="100" value="100" oninput="manualOverride()">
+            </div>
+
+            <div class="control-box">
+                <label><span>Windgeschwindigkeit:</span> <strong id="valWind">15 km/h</strong></label>
+                <input type="range" id="slWind" min="0" max="90" value="15">
+            </div>
+
+            <div class="kpi-grid">
+                <div class="kpi">Windangriffsfläche<strong id="kpiArea">100 %</strong></div>
+                <div class="kpi">Masthöhe (Hebelarm)<strong id="kpiHeight">2,10 m</strong></div>
+                <div class="kpi" style="border-left-color:#f59e0b;">Biegemoment Sockel<strong id="kpiTorque">42 Nm</strong></div>
+                <div class="kpi" style="border-left-color:#a855f7;">Biegeradius Folie<strong id="kpiRadius">R = 12 cm (OK)</strong></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+
+let tilt = 25;        // Grad (-35 bis +35)
+let rollo = 100;      // % (100 = voll ausgefahren, 0 = aufgerollt)
+let mast = 100;       // % (100 = voll ausgefahren, 0 = abgesenkt)
+let autoMode = null;  // 'STORM' oder 'SUN' oder null
+let spindlePhase = 0;
+let windParticles = Array.from({length: 18}, () => ({
+    x: Math.random() * 700,
+    y: Math.random() * 340 + 20,
+    len: Math.random() * 25 + 15
+}));
+
+function triggerStormMode() { autoMode = 'STORM'; }
+function triggerSunMode() { autoMode = 'SUN'; }
+function manualOverride() {
+    autoMode = null;
+    tilt = parseFloat(document.getElementById('slTilt').value);
+    rollo = parseFloat(document.getElementById('slRollo').value);
+    mast = parseFloat(document.getElementById('slMast').value);
+}
+
+function updateLoop() {
+    const windSpeed = parseFloat(document.getElementById('slWind').value);
+    const badge = document.getElementById('statusBadge');
+
+    // Automatische Sturmsicherungs-Sequenz (3 Phasen)
+    if (autoMode === 'STORM') {
+        if (Math.abs(tilt) > 0.8) {
+            // Phase 1: Schirmdach horizontal stellen
+            tilt += (0 - tilt) * 0.12;
+            badge.style.background = '#b45309';
+            badge.innerText = 'PHASE 1/3: DACH HORIZONTAL AUSRICHTEN...';
+        } else if (rollo > 1) {
+            // Phase 2: Rolloprinzip wickelt Solarfolie ein
+            tilt = 0;
+            rollo = Math.max(0, rollo - 1.8);
+            badge.style.background = '#c2410c';
+            badge.innerText = 'PHASE 2/3: SOLARFOLIE AUFWICKELN (ROHRMOTOR)...';
+        } else if (mast > 1) {
+            // Phase 3: Teleskopmast über Trapezspindel absenken
+            rollo = 0;
+            mast = Math.max(0, mast - 1.5);
+            spindlePhase -= 0.4;
+            badge.style.background = '#991b1b';
+            badge.innerText = 'PHASE 3/3: TELESKOPMAST ABSENKEN (TR16×4)...';
+        } else {
+            mast = 0;
+            autoMode = null;
+            badge.style.background = '#1e40af';
+            badge.innerText = 'STURMSICHERUNG AKTIV (BODENPOSITION VERankert)';
+        }
+        syncSliders();
+    } else if (autoMode === 'SUN') {
+        if (mast < 99) {
+            mast = Math.min(100, mast + 1.5);
+            spindlePhase += 0.4;
+            badge.style.background = '#0369a1';
+            badge.innerText = 'AUSFAHREN 1/3: TELESKOPMAST HEBEN (TR16×4)...';
+        } else if (rollo < 99) {
+            mast = 100;
+            rollo = Math.min(100, rollo + 1.8);
+            badge.style.background = '#0284c7';
+            badge.innerText = 'AUSFAHREN 2/3: SOLARFOLIE ABROLLEN...';
+        } else if (Math.abs(tilt - 25) > 0.8) {
+            rollo = 100;
+            tilt += (25 - tilt) * 0.12;
+            badge.style.background = '#15803d';
+            badge.innerText = 'AUSFAHREN 3/3: SONNENWINKEL TRACKEN...';
+        } else {
+            tilt = 25;
+            autoMode = null;
+            badge.style.background = '#166534';
+            badge.innerText = 'STATUS: NORMALER TRACKING-BETRIEB';
+        }
+        syncSliders();
+    }
+
+    // KPI-Berechnung (Hebelarm & Biegemoment)
+    const heightMeters = 0.85 + (mast / 100) * 1.25; // 0.85m eingefahren bis 2.10m ausgefahren
+    const effectiveAreaFactor = (0.12 + (rollo / 100) * 0.88) * (0.35 + Math.abs(Math.sin(tilt * Math.PI / 180)) * 0.65);
+    const windForce = Math.pow(windSpeed / 15, 2) * 25 * effectiveAreaFactor;
+    const torqueNm = Math.round(windForce * heightMeters);
+
+    document.getElementById('valTilt').innerText = Math.round(tilt) + '°';
+    document.getElementById('valRollo').innerText = Math.round(rollo) + '% ausgefahren';
+    document.getElementById('valMast').innerText = Math.round(mast) + '% Hub';
+    document.getElementById('valWind').innerText = Math.round(windSpeed) + ' km/h';
+    document.getElementById('kpiArea').innerText = Math.round((rollo * 0.88) + 12) + ' %';
+    document.getElementById('kpiHeight').innerText = heightMeters.toFixed(2) + ' m';
+    document.getElementById('kpiTorque').innerText = torqueNm + ' Nm';
+
+    drawScene(windSpeed);
+    requestAnimationFrame(updateLoop);
+}
+
+function syncSliders() {
+    document.getElementById('slTilt').value = tilt;
+    document.getElementById('slRollo').value = rollo;
+    document.getElementById('slMast').value = mast;
+}
+
+function drawScene(windSpeed) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Wind-Partikel zeichnen
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.35)';
+    ctx.lineWidth = 2;
+    windParticles.forEach(p => {
+        p.x += (windSpeed * 0.15) + 0.5;
+        if (p.x > 700) p.x = -30;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.len, p.y);
+        ctx.stroke();
+    });
+
+    const baseX = 250;
+    const groundY = 395;
+
+    // 2. Schwere Sockelplatte & 12V-Spindelmotor unten
+    ctx.fillStyle = '#475569';
+    ctx.fillRect(baseX - 95, groundY, 190, 22);
+    ctx.strokeStyle = '#94a3b8';
+    ctx.strokeRect(baseX - 95, groundY, 190, 22);
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '11px Segoe UI';
+    ctx.fillText('Schwere Sockelplatte + 12V Spindelantrieb', baseX - 90, groundY + 38);
+
+    // 3. 3-Stufiger Teleskopmast (Ø 60mm / 50mm / 40mm + PTFE-Hülsen + TR16x4 Spindel)
+    const stage1H = 95;
+    const stage2Ext = (mast / 100) * 75;
+    const stage3Ext = (mast / 100) * 75;
+
+    // Stufe 1: Außenrohr Ø 60 mm
+    const s1Top = groundY - stage1H;
+    ctx.fillStyle = 'rgba(148, 163, 184, 0.45)';
+    ctx.fillRect(baseX - 22, s1Top, 44, stage1H);
+    ctx.strokeStyle = '#cbd5e1';
+    ctx.strokeRect(baseX - 22, s1Top, 44, stage1H);
+
+    // PTFE / POM Führungshülse 1 (Türkis markiert)
+    ctx.fillStyle = '#06b6d4';
+    ctx.fillRect(baseX - 21, s1Top, 5, 12);
+    ctx.fillRect(baseX + 16, s1Top, 5, 12);
+
+    // Stufe 2: Mittelrohr Ø 50 mm
+    const s2Top = s1Top - stage2Ext;
+    ctx.fillStyle = 'rgba(203, 213, 225, 0.55)';
+    ctx.fillRect(baseX - 16, s2Top, 32, stage2Ext + 25);
+    ctx.strokeRect(baseX - 16, s2Top, 32, stage2Ext + 25);
+
+    // PTFE / POM Führungshülse 2
+    ctx.fillStyle = '#06b6d4';
+    ctx.fillRect(baseX - 15, s2Top, 4, 12);
+    ctx.fillRect(baseX + 11, s2Top, 4, 12);
+
+    // Stufe 3: Innenrohr Ø 40 mm
+    const s3Top = s2Top - stage3Ext;
+    ctx.fillStyle = 'rgba(241, 245, 249, 0.7)';
+    ctx.fillRect(baseX - 11, s3Top, 22, stage3Ext + 25);
+    ctx.strokeRect(baseX - 11, s3Top, 22, stage3Ext + 25);
+
+    // Interne Trapezgewindespindel TR16x4 (Schnittdarstellung in der Mitte)
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(baseX, groundY);
+    ctx.lineTo(baseX, s3Top + 15);
+    ctx.stroke();
+
+    // Beschriftung Teleskopmast
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillText('← PTFE/POM-Gleitlager', baseX + 26, s1Top + 10);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText('← Spindel TR16×4', baseX + 26, groundY - 35);
+
+    // 4. 2-Achsen Drehkopf + Eckiges Schirmdach mit Rolloprinzip (Seitenansicht)
+    ctx.save();
+    ctx.translate(baseX, s3Top);
+    ctx.rotate((tilt * Math.PI) / 180);
+
+    // Gelenkkopf
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(-14, -18, 28, 18);
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(-14, -18, 28, 18);
+
+    // Äußerer 20x20mm Aluminium-Tragrahmen (eckig)
+    const halfWidth = 155;
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillRect(-halfWidth, -24, halfWidth * 2, 6);
+
+    // Federgespanntes Edelstahl-Drahtseil (Ø 2-3 mm)
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    ctx.moveTo(-halfWidth + 10, -28);
+    ctx.lineTo(halfWidth - 10, -28);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Zentrale Wickelwelle (Ø 40-50 mm mit Rohrmotor)
+    const rollRadius = 10 + ((100 - rollo) / 100) * 8; // Wird dicker beim Aufrollen!
+    ctx.fillStyle = '#1d4ed8';
+    ctx.beginPath();
+    ctx.arc(0, -32, rollRadius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#93c5fd';
+    ctx.stroke();
+
+    // Ausgefahrene flexible Solarfolie auf Markisentuch (links & rechts)
+    const extLen = (rollo / 100) * (halfWidth - 18);
+    if (extLen > 2) {
+        ctx.fillStyle = '#0284c7';
+        ctx.fillRect(-extLen, -34, extLen * 2, 5);
+        // Zugstangen an den Enden
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(-extLen - 3, -36, 5, 9);
+        ctx.fillRect(extLen - 2, -36, 5, 9);
+    }
+
+    ctx.restore();
+
+    // 5. Mini-Draufsicht oben rechts (Eckige Geometrie & Rolloprinzip von oben)
+    const topX = 565, topY = 115, boxR = 85;
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+    ctx.fillRect(topX - 105, topY - 100, 210, 210);
+    ctx.strokeStyle = '#475569';
+    ctx.strokeRect(topX - 105, topY - 100, 210, 210);
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = 'bold 12px Segoe UI';
+    ctx.fillText('DRAUFSICHT: ECKIGES DACH', topX - 85, topY - 80);
+
+    // 20x20 Alu-Rahmen Quadrat
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(topX - boxR, topY - boxR + 10, boxR * 2, boxR * 2);
+
+    // Edelstahl-Führungsseile oben & unten
+    ctx.strokeStyle = '#cbd5e1';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(topX - boxR, topY - boxR + 22);
+    ctx.lineTo(topX + boxR, topY - boxR + 22);
+    ctx.moveTo(topX - boxR, topY + boxR - 2);
+    ctx.lineTo(topX + boxR, topY + boxR - 2);
+    ctx.stroke();
+
+    // Ausgerollte Solarfolie in der Draufsicht
+    const topExt = (rollo / 100) * (boxR - 10);
+    ctx.fillStyle = 'rgba(2, 132, 199, 0.85)';
+    ctx.fillRect(topX - topExt, topY - boxR + 16, topExt * 2, (boxR * 2) - 12);
+
+    // Mittelwelle (Rohrmotor)
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(topX - 6, topY - boxR + 10, 12, boxR * 2);
+}
+
+updateLoop();
+</script>
+</body>
+</html>
