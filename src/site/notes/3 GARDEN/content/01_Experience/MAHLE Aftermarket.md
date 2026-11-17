@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/mahle-aftermarket/","title":"MAHLE Aftermarket","tags":["automotive","aftermarket","product-management","mahle","supply-chain"],"dg-note-properties":{"title":"MAHLE Aftermarket","tags":["automotive","aftermarket","product-management","mahle","supply-chain"]}}
+{"dg-publish":true,"dg-path":"01_Experience/MAHLE Aftermarket.md","permalink":"/01-experience/mahle-aftermarket/","title":"MAHLE Aftermarket","tags":["automotive","aftermarket","product-management","mahle","supply-chain"],"dg-note-properties":{"title":"MAHLE Aftermarket","tags":["automotive","aftermarket","product-management","mahle","supply-chain"]}}
 ---
 
 

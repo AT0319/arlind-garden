@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/02-projects/helio-shade/","title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering"],"dg-note-properties":{"title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering"]}}
+{"dg-publish":true,"dg-path":"02_Projects/HelioShade.md","permalink":"/02-projects/helio-shade/","title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering"],"dg-note-properties":{"title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering"]}}
 ---
 
 

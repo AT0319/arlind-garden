@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/academic-tutoring/","title":"Academic Tutoring","tags":["mentoring","education","communication","vba","process-optimization"],"dg-note-properties":{"title":"Academic Tutoring","tags":["mentoring","education","communication","vba","process-optimization"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Academic Tutoring.md","permalink":"/01-experience/academic-tutoring/","title":"Academic Tutoring","tags":["mentoring","education","communication","vba","process-optimization"],"dg-note-properties":{"title":"Academic Tutoring","tags":["mentoring","education","communication","vba","process-optimization"]}}
 ---
 
 

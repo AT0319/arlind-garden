@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/amazon-operations-internship/","title":"Amazon Operations","tags":["amazon","automation","python","javascript","vba","data-analytics"],"dg-note-properties":{"title":"Amazon Operations","tags":["amazon","automation","python","javascript","vba","data-analytics"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Amazon Operations Internship.md","permalink":"/01-experience/amazon-operations-internship/","title":"Amazon Operations","tags":["amazon","automation","python","javascript","vba","data-analytics"],"dg-note-properties":{"title":"Amazon Operations","tags":["amazon","automation","python","javascript","vba","data-analytics"]}}
 ---
 
 

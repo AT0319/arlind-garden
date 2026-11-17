@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/experience/","title":"Experience & Internships","tags":["career","timeline"],"dg-note-properties":{"title":"Experience & Internships","tags":["career","timeline"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Experience.md","permalink":"/01-experience/experience/","title":"Experience & Internships","tags":["career","timeline"],"dg-note-properties":{"title":"Experience & Internships","tags":["career","timeline"]}}
 ---
 
 

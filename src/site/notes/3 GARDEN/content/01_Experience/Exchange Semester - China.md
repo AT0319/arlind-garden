@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/exchange-semester-china/","title":"Exchange Semester (China)","tags":["international","shanghai","silc","startup","cross-cultural"],"dg-note-properties":{"title":"Exchange Semester (China)","tags":["international","shanghai","silc","startup","cross-cultural"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Exchange Semester - China.md","permalink":"/01-experience/exchange-semester-china/","title":"Exchange Semester (China)","tags":["international","shanghai","silc","startup","cross-cultural"],"dg-note-properties":{"title":"Exchange Semester (China)","tags":["international","shanghai","silc","startup","cross-cultural"]}}
 ---
 
 

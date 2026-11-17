@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/02-projects/smart-coffee-machine-controller/","title":"Smart Coffee Machine Controller","tags":["software","python","c","object-oriented-programming","smart-systems"],"dg-note-properties":{"title":"Smart Coffee Machine Controller","tags":["software","python","c","object-oriented-programming","smart-systems"]}}
+{"dg-publish":true,"dg-path":"02_Projects/Smart Coffee Machine Controller.md","permalink":"/02-projects/smart-coffee-machine-controller/","title":"Smart Coffee Machine Controller","tags":["software","python","c","object-oriented-programming","smart-systems"],"dg-note-properties":{"title":"Smart Coffee Machine Controller","tags":["software","python","c","object-oriented-programming","smart-systems"]}}
 ---
 
 

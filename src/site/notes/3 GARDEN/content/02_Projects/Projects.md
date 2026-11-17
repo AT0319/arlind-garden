@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/02-projects/projects/","title":"Projects & Builds","tags":["projects","portfolio","engineering"],"dg-note-properties":{"title":"Projects & Builds","tags":["projects","portfolio","engineering"]}}
+{"dg-publish":true,"dg-path":"02_Projects/Projects.md","permalink":"/02-projects/projects/","title":"Projects & Builds","tags":["projects","portfolio","engineering"],"dg-note-properties":{"title":"Projects & Builds","tags":["projects","portfolio","engineering"]}}
 ---
 
 

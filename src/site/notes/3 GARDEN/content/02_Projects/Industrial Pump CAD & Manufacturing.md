@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/02-projects/industrial-pump-cad-and-manufacturing/","dg-note-properties":{}}
+{"dg-publish":true,"dg-path":"02_Projects/Industrial Pump CAD & Manufacturing.md","permalink":"/02-projects/industrial-pump-cad-and-manufacturing/","dg-note-properties":{}}
 ---
 
 

@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/klauss-and-klauss-oktoberfest/","title":"Klauss & Klauss (Oktoberfest)","tags":["operations","event-management","hospitality","resilience"],"dg-note-properties":{"title":"Klauss & Klauss (Oktoberfest)","tags":["operations","event-management","hospitality","resilience"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Klauss and Klauss Oktoberfest.md","permalink":"/01-experience/klauss-and-klauss-oktoberfest/","title":"Klauss & Klauss (Oktoberfest)","tags":["operations","event-management","hospitality","resilience"],"dg-note-properties":{"title":"Klauss & Klauss (Oktoberfest)","tags":["operations","event-management","hospitality","resilience"]}}
 ---
 
 

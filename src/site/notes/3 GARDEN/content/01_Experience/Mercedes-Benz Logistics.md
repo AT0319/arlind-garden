@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/mercedes-benz-logistics/","title":"Mercedes-Benz Logistics","tags":["logistics","supply-chain","sap","mercedes-benz"],"dg-note-properties":{"title":"Mercedes-Benz Logistics","tags":["logistics","supply-chain","sap","mercedes-benz"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Mercedes-Benz Logistics.md","permalink":"/01-experience/mercedes-benz-logistics/","title":"Mercedes-Benz Logistics","tags":["logistics","supply-chain","sap","mercedes-benz"],"dg-note-properties":{"title":"Mercedes-Benz Logistics","tags":["logistics","supply-chain","sap","mercedes-benz"]}}
 ---
 
 

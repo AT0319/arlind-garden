@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/index/","title":"Welcome!","tags":["gardenEntry"],"dg-note-properties":{"title":"Welcome!"}}
+{"dg-publish":true,"dg-path":"index.md","permalink":"/index/","title":"Welcome!","tags":["gardenEntry"],"dg-note-properties":{"title":"Welcome!"}}
 ---
 
 

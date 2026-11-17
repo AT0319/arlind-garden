@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/legal-internship/","title":"Legal Intern","tags":["law","administration","organization"],"dg-note-properties":{"title":"Legal Intern","tags":["law","administration","organization"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Legal Internship.md","permalink":"/01-experience/legal-internship/","title":"Legal Intern","tags":["law","administration","organization"],"dg-note-properties":{"title":"Legal Intern","tags":["law","administration","organization"]}}
 ---
 
 

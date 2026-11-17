@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"permalink":"/3-garden/content/01-experience/peek-and-cloppenburg-sales/","title":"Peek & Cloppenburg Sales","tags":["sales","customer-service","retail"],"dg-note-properties":{"title":"Peek & Cloppenburg Sales","tags":["sales","customer-service","retail"]}}
+{"dg-publish":true,"dg-path":"01_Experience/Peek and Cloppenburg Sales.md","permalink":"/01-experience/peek-and-cloppenburg-sales/","title":"Peek & Cloppenburg Sales","tags":["sales","customer-service","retail"],"dg-note-properties":{"title":"Peek & Cloppenburg Sales","tags":["sales","customer-service","retail"]}}
 ---
 
 
