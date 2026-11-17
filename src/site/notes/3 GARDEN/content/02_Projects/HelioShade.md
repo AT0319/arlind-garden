@@ -27,9 +27,6 @@ HelioShade solves this by integrating smart tracking technology with high-effici
 ### Engineering & Prototyping
 Developing HelioShade requires a holistic approach to mechanical engineering and smart systems. Below are the visual prototypes and the detailed CAD models that bring our concept to life.
 
-**HelioShade Visual Prototype:**
-<video controls src="site/img/HelioShade Visual V1.mp4" width="100%"></video>
-
 **Technical CAD Model:**
 <video controls width="100%" preload="metadata" src="/img/CAD%20Model%20of%20HelioShade.mp4"></video>
 
