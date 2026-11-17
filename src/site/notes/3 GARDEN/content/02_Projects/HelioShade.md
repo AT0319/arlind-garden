@@ -1,5 +1,5 @@
 ---
-{"dg-publish":true,"dg-path":"02_Projects/HelioShade.md","permalink":"/02-projects/helio-shade/","title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering"],"dg-note-properties":{"title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering"]}}
+{"dg-publish":true,"dg-path":"02_Projects/HelioShade.md","permalink":"/02-projects/helio-shade/","title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering","video"],"dg-note-properties":{"title":"HelioShade","tags":["startup","solar","innovation","entrepreneurship","china","cad","engineering","video"]}}
 ---
 
 
@@ -28,10 +28,10 @@ HelioShade solves this by integrating smart tracking technology with high-effici
 Developing HelioShade requires a holistic approach to mechanical engineering and smart systems. Below are the visual prototypes and the detailed CAD models that bring our concept to life.
 
 **HelioShade Visual Prototype:**
-<video controls src="HelioShade%20Visual%20V1.mp4" width="100%"></video>
+<video controls src="site/img/HelioShade Visual V1.mp4" width="100%"></video>
 
 **Technical CAD Model:**
-<video controls src="CAD%20Model%20of%20HelioShade.mp4" width="100%"></video>
+<video controls width="100%" preload="metadata" src="/img/CAD%20Model%20of%20HelioShade.mp4"></video>
 
 #### Next-Generation Prototype (Model V1)
 To rigorously test the system's mechanics, sensors, and algorithmic logic before full-scale manufacturing, we developed a highly optimized 50 cm functional prototype. 
@@ -49,11 +49,10 @@ A critical requirement for autonomous outdoor infrastructure is safety during hi
 > [!tip] Interactive Storm Simulation
 > Test the logic and user interface of the weather emergency override system below.
 > 
-> [🌪️ Click here to launch the Storm Protection Showcase](helioshade_sturmsicherung.html)
+> <iframe src="/img/helioshade_sturmsicherung.html" width="100%" height="500px" style="border:none; border-radius:8px;"></iframe> <p><a href="/img/helioshade_sturmsicherung.html" target="_blank">Open Storm Protection Simulation in Full Screen</a></p>
 
 ---
 
 ### Business Plan & Strategy
 Beyond the technical engineering, developing a scalable business model is critical to our success, especially as we actively pitch to investors and present our startup in China. 
-
-[📄 Click here to view/download the full HelioShade Business Plan (PDF)](HelioShade%20BP.pdf)
+<p><a href="/img/HelioShade%20BP.pdf" target="_blank">Open HelioShade Business Plan (PDF)</a></p> 
